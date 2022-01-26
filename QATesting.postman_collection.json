@@ -1,0 +1,1167 @@
+{
+	"info": {
+		"_postman_id": "9b5fcb77-bb2e-412b-a384-01216758f4d7",
+		"name": "Ewally QA Testing",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Cria token de acesso (CPF)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status 200 na solicitação\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"const response = pm.response.json();\r",
+							"\r",
+							"pm.collectionVariables.set(\"accessTokenCPF\", response.token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"username\": \"97344890038\",\r\n  \"password\": \"1234\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "apidev.ewally.com.br/user/login",
+					"host": [
+						"apidev",
+						"ewally",
+						"com",
+						"br"
+					],
+					"path": [
+						"user",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cria token de acesso (CNPJ)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status 200 na solicitação\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"const response = pm.response.json();\r",
+							"\r",
+							"pm.collectionVariables.set(\"accessTokenCNPJ\", response.token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"username\": \"64440513000104\",\r\n  \"password\": \"1234\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "apidev.ewally.com.br/user/login",
+					"host": [
+						"apidev",
+						"ewally",
+						"com",
+						"br"
+					],
+					"path": [
+						"user",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cria chave PIX (CPF)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status 200 na solicitação\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessTokenCPF}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"key\": \"\",\r\n  \"keyType\": \"evp\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "apidev.ewally.com.br/dict/key/97344890038",
+					"host": [
+						"apidev",
+						"ewally",
+						"com",
+						"br"
+					],
+					"path": [
+						"dict",
+						"key",
+						"97344890038"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Exibe chaves PIX (CPF)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status 200 na solicitação\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"const response = pm.response.json();\r",
+							"\r",
+							"// Tratamento genérico para tratar a exceção TypeError, que é disparado quando o método set não encontra o atributo id no array.\r",
+							"try{\r",
+							"\r",
+							"if (response.keys != \"[]\")\r",
+							"{\r",
+							"    pm.collectionVariables.set(\"idCPFKey\", response.keys[0].id);\r",
+							"}\r",
+							"}catch(TypeError)\r",
+							"{\r",
+							"\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessTokenCPF}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "apidev.ewally.com.br/dict/key/97344890038",
+					"host": [
+						"apidev",
+						"ewally",
+						"com",
+						"br"
+					],
+					"path": [
+						"dict",
+						"key",
+						"97344890038"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Exibe chave específica (CPF)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status 200 na solicitação\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessTokenCPF}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "apidev.ewally.com.br/dict/key/97344890038/{{idCPFKey}}",
+					"host": [
+						"apidev",
+						"ewally",
+						"com",
+						"br"
+					],
+					"path": [
+						"dict",
+						"key",
+						"97344890038",
+						"{{idCPFKey}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Deleta chave PIX (CPF)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status 200 na solicitação\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessTokenCPF}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "apidev.ewally.com.br/dict/key/97344890038/?id={{idCPFKey}}",
+					"host": [
+						"apidev",
+						"ewally",
+						"com",
+						"br"
+					],
+					"path": [
+						"dict",
+						"key",
+						"97344890038",
+						""
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "{{idCPFKey}}",
+							"description": "Id da chave a ser deletada."
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cria chave PIX (CNPJ)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status 200 na solicitação\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessTokenCNPJ}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"key\": \"\",\r\n  \"keyType\": \"evp\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "apidev.ewally.com.br/dict/key/64440513000104",
+					"host": [
+						"apidev",
+						"ewally",
+						"com",
+						"br"
+					],
+					"path": [
+						"dict",
+						"key",
+						"64440513000104"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Exibe chaves PIX (CNPJ)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status 200 na solicitação\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"const response = pm.response.json();\r",
+							"\r",
+							"// Tratamento genérico para tratar a exceção TypeError, que é disparado quando o método set não encontra o atributo id no array.\r",
+							"try{\r",
+							"\r",
+							"if (response.keys != \"[]\")\r",
+							"{\r",
+							"    pm.collectionVariables.set(\"idCNPJKey\", response.keys[0].id);\r",
+							"}\r",
+							"}catch(TypeError)\r",
+							"{\r",
+							"\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessTokenCNPJ}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "apidev.ewally.com.br/dict/key/64440513000104",
+					"host": [
+						"apidev",
+						"ewally",
+						"com",
+						"br"
+					],
+					"path": [
+						"dict",
+						"key",
+						"64440513000104"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Exibe chave específica (CNPJ)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status 200 na solicitação\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessTokenCNPJ}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "apidev.ewally.com.br/dict/key/64440513000104/{{idCNPJKey}}",
+					"host": [
+						"apidev",
+						"ewally",
+						"com",
+						"br"
+					],
+					"path": [
+						"dict",
+						"key",
+						"64440513000104",
+						"{{idCNPJKey}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Deleta chave PIX (CNPJ)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status 200 na solicitação\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessTokenCNPJ}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "apidev.ewally.com.br/dict/key/64440513000104/?id={{idCNPJKey}}",
+					"host": [
+						"apidev",
+						"ewally",
+						"com",
+						"br"
+					],
+					"path": [
+						"dict",
+						"key",
+						"64440513000104",
+						""
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "{{idCNPJKey}}",
+							"description": "Id da chave a ser deletada."
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Envia código de verificação",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status 200 na solicitação\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessTokenCPF}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "apidev.ewally.com.br/pix/key/verify/97344890038?key=realmarlonreis@gmail.com&keyType=email",
+					"host": [
+						"apidev",
+						"ewally",
+						"com",
+						"br"
+					],
+					"path": [
+						"pix",
+						"key",
+						"verify",
+						"97344890038"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "realmarlonreis@gmail.com",
+							"description": "Identificador da chave."
+						},
+						{
+							"key": "keyType",
+							"value": "email",
+							"description": "Tipo de chave PIX a ser enviado o código."
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Confirma código de verificação",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status 200 na solicitação\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessTokenCPF}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "apidev.ewally.com.br/pix/key/verify/97344890038?key=realmarlonreis@gmail.com&code={{codigoRetorno}}",
+					"host": [
+						"apidev",
+						"ewally",
+						"com",
+						"br"
+					],
+					"path": [
+						"pix",
+						"key",
+						"verify",
+						"97344890038"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "realmarlonreis@gmail.com",
+							"description": "Identificador da chave."
+						},
+						{
+							"key": "code",
+							"value": "{{codigoRetorno}}",
+							"description": "Código de retorno."
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Tentativa de token de acesso inválida (sem senha)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"username\": \"97344890038\",\r\n  \"password\": \"\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "apidev.ewally.com.br/user/login",
+					"host": [
+						"apidev",
+						"ewally",
+						"com",
+						"br"
+					],
+					"path": [
+						"user",
+						"login"
+					]
+				},
+				"description": "Tentativa de criação de token inválida ao não inserir senha."
+			},
+			"response": []
+		},
+		{
+			"name": "Tentativa de token de acesso inválida (sem username)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"username\": \"\",\r\n  \"password\": \"1234\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "apidev.ewally.com.br/user/login",
+					"host": [
+						"apidev",
+						"ewally",
+						"com",
+						"br"
+					],
+					"path": [
+						"user",
+						"login"
+					]
+				},
+				"description": "Tentativa de criação de token inválida ao não inserir username."
+			},
+			"response": []
+		},
+		{
+			"name": "Tentativa de chave PIX sem parâmetros",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessTokenCPF}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"key\": \"\",\r\n  \"keyType\": \"\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "apidev.ewally.com.br/dict/key/97344890038",
+					"host": [
+						"apidev",
+						"ewally",
+						"com",
+						"br"
+					],
+					"path": [
+						"dict",
+						"key",
+						"97344890038"
+					]
+				},
+				"description": "Tentativa de criação de cahave PIX sem key ou keyType."
+			},
+			"response": []
+		},
+		{
+			"name": "Tentativa de chave PIX com parâmetros incorretos",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessTokenCPF}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"key\": \"123412312\",\r\n  \"keyType\": \"email\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "apidev.ewally.com.br/dict/key/97344890038",
+					"host": [
+						"apidev",
+						"ewally",
+						"com",
+						"br"
+					],
+					"path": [
+						"dict",
+						"key",
+						"97344890038"
+					]
+				},
+				"description": "Tentativa de criação de chave PIX utilizando numéricos para um keyType email."
+			},
+			"response": []
+		},
+		{
+			"name": "Tentativa de exibir chaves PIX sem username correto",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessTokenCPF}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "apidev.ewally.com.br/dict/key/973448900",
+					"host": [
+						"apidev",
+						"ewally",
+						"com",
+						"br"
+					],
+					"path": [
+						"dict",
+						"key",
+						"973448900"
+					]
+				},
+				"description": "Tentativa de exibir chaves PIX cadastradas para um username inexistente."
+			},
+			"response": []
+		},
+		{
+			"name": "Tentativa de envio de código de verificação inválido",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessTokenCPF}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "apidev.ewally.com.br/pix/key/verify/97344890038?key=Teste&keyType=email",
+					"host": [
+						"apidev",
+						"ewally",
+						"com",
+						"br"
+					],
+					"path": [
+						"pix",
+						"key",
+						"verify",
+						"97344890038"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "Teste",
+							"description": "Identificador da chave."
+						},
+						{
+							"key": "keyType",
+							"value": "email",
+							"description": "Tipo de chave PIX a ser enviado o código."
+						}
+					]
+				},
+				"description": "Tentativa de envio de código de verificação incluindo dado errado no campo key, dado email no campo keyType."
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{accessToken}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"const response = pm.response.json();",
+					"",
+					"if (response.status == \"deleted\")",
+					"    pm.test(\"Chave deletada\");",
+					"",
+					"const codigo = response.code;",
+					"",
+					"switch (codigo) {",
+					"    case 1:",
+					"        pm.test(\"Token inválido\");",
+					"        break;",
+					"    case 4:",
+					"        pm.test(\"Sem permissão\");",
+					"        break;",
+					"    case 101:",
+					"        pm.test(\"Requisição inválida\");",
+					"        break;",
+					"    case 102:",
+					"        pm.test(\"Falta o nome do usuário\");",
+					"        break;",
+					"    case 103:",
+					"        pm.test(\"Falta a senha\");",
+					"        break;",
+					"    case 106:",
+					"        pm.test(\"Login e senha não conferem\");",
+					"        break;",
+					"    case 110:",
+					"        pm.test(\"Sessão expirada, é necessário um novo login\");",
+					"        break;",
+					"    case 4001:",
+					"        pm.test(\"O campo keyType deve ser do tipo string\");",
+					"        break;",
+					"    case 4003:",
+					"        pm.test(\"O campo keyType é inválido\");",
+					"        break;",
+					"    case 4023:",
+					"        pm.test(\"Email informado inválido\");",
+					"        break;",
+					"    case 4024:",
+					"        pm.test(\"Telefone informado inválido\");",
+					"        break;",
+					"    case 4041:",
+					"        pm.test(\"Número máximo de chaves por conta atingida\");",
+					"        break;",
+					"    case 4043:",
+					"        pm.test(\"É necessário cadastrar uma chave PIX\");",
+					"        break;",
+					"    case 4092:",
+					"        pm.test(\"Código incorreto: seu código será invalidado\");",
+					"        break;",
+					"    case 4093:",
+					"        pm.test(\"Código incorreto: chave foi invalidada, solicite um novo código\");",
+					"        break;",
+					"    case 4094:",
+					"        pm.test(\"Código inválido ou expirado\");",
+					"}"
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "accessTokenCPF",
+			"value": ""
+		},
+		{
+			"key": "accessTokenCNPJ",
+			"value": ""
+		},
+		{
+			"key": "idCPFKey",
+			"value": ""
+		},
+		{
+			"key": "idCNPJKey",
+			"value": ""
+		},
+		{
+			"key": "codigoRetorno",
+			"value": ""
+		}
+	]
+}
